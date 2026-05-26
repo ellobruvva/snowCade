@@ -1,27 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
   color: white;
   overflow: hidden;
 }
 
-/* background gif */
-.bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: url("snow.gif") center/cover no-repeat;
-  z-index: -2;
-}
-
+/* 🌌 animated gradient overlay on top of GIF */
 .overlay {
   position: fixed;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.65);
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(0,200,255,0.15), transparent 40%),
+              radial-gradient(circle at bottom, rgba(255,0,200,0.12), transparent 45%),
+              rgba(0,0,0,0.55);
   z-index: -1;
 }
 
+/* 🎥 background GIF */
+.bg {
+  position: fixed;
+  inset: 0;
+  background: url("snow.gif") center/cover no-repeat;
+  z-index: -2;
+  transform: scale(1.05);
+  filter: saturate(1.2) contrast(1.1);
+}
+
+/* 🧊 center layout */
 .container {
   height: 100vh;
   display: flex;
@@ -29,36 +35,75 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-h1 {
-  font-size: 3.5rem;
-}
-
-.card {
-  margin-top: 20px;
-  background: rgba(255,255,255,0.08);
   padding: 20px;
-  border-radius: 14px;
-  backdrop-filter: blur(10px);
 }
 
+/* ❄️ title */
+h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin: 0;
+  text-shadow: 0 0 30px rgba(0,200,255,0.25);
+}
+
+/* subtitle */
+p {
+  color: rgba(255,255,255,0.7);
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+/* 🧊 glass card */
+.card {
+  margin-top: 25px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 60px rgba(0,200,255,0.15);
+}
+
+/* 🔘 buttons */
 .btn {
   padding: 12px 18px;
   margin: 8px;
-  border-radius: 10px;
+  border-radius: 12px;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
+/* primary button glow */
 .primary {
-  background: #00c8ff;
+  background: linear-gradient(135deg, #00c8ff, #6ee7ff);
   color: black;
+  box-shadow: 0 0 20px rgba(0,200,255,0.25);
 }
 
+.primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0,200,255,0.4);
+}
+
+/* secondary button */
 .secondary {
-  border: 1px solid #aaa;
+  border: 1px solid rgba(255,255,255,0.25);
   color: white;
-  background: transparent;
+  background: rgba(255,255,255,0.03);
+}
+
+.secondary:hover {
+  border-color: #00c8ff;
+  color: #00c8ff;
+  transform: scale(1.03);
 }
