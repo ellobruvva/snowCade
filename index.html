@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SnowCade Dashboard</title>
+<title>SnowCade</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
@@ -11,42 +11,42 @@
 body {
   margin: 0;
   font-family: Inter, sans-serif;
-  background: #050505;
+  background: black;
   color: white;
   overflow: hidden;
 }
 
-/* 🌌 background */
+/* background */
 .bg {
   position: fixed;
   inset: 0;
   background: url("snow.gif") center/cover no-repeat;
-  filter: brightness(0.6) saturate(1.2);
-  z-index: -3;
+  filter: brightness(0.55);
+  z-index: -2;
 }
 
 .overlay {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at top left, rgba(0,200,255,0.2), transparent 40%),
-              radial-gradient(circle at bottom right, rgba(255,0,200,0.15), transparent 45%),
+  background: radial-gradient(circle at top left, rgba(0,200,255,0.18), transparent 40%),
+              radial-gradient(circle at bottom right, rgba(255,0,200,0.12), transparent 45%),
               rgba(0,0,0,0.6);
-  z-index: -2;
+  z-index: -1;
 }
 
-/* 🧊 layout */
+/* layout */
 .app {
   display: flex;
   height: 100vh;
 }
 
-/* 📌 sidebar */
+/* sidebar */
 .sidebar {
   width: 240px;
+  padding: 20px;
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(16px);
   border-right: 1px solid rgba(255,255,255,0.08);
-  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -58,7 +58,8 @@ body {
   margin-bottom: 20px;
 }
 
-.navbtn {
+/* nav items */
+.nav {
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
@@ -66,84 +67,70 @@ body {
   transition: 0.2s;
 }
 
-.navbtn:hover {
+.nav:hover {
   background: rgba(255,255,255,0.08);
   color: white;
   transform: translateX(4px);
 }
 
-/* 🧠 main area */
+.nav.active {
+  background: rgba(0,200,255,0.15);
+  color: white;
+  border: 1px solid rgba(0,200,255,0.3);
+}
+
+/* main */
 .main {
   flex: 1;
   padding: 30px;
-  overflow: hidden;
 }
 
-/* header */
 .topbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
 }
 
-/* 🎮 grid */
+/* pages */
+.page {
+  display: none;
+  animation: fade 0.3s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* cards */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 15px;
 }
 
-/* 🎴 cards */
 .card {
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: 16px;
-  padding: 20px;
-  transition: 0.25s ease;
+  padding: 18px;
+  backdrop-filter: blur(12px);
+  transition: 0.25s;
   cursor: pointer;
-  backdrop-filter: blur(14px);
-  position: relative;
-  overflow: hidden;
 }
 
 .card:hover {
   transform: translateY(-6px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0,200,255,0.15);
-}
-
-/* glow hover */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top left, rgba(0,200,255,0.15), transparent 60%);
-  opacity: 0;
-  transition: 0.3s;
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-
-/* subtle animation */
-.fade {
-  animation: fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.small {
-  color: rgba(255,255,255,0.6);
-  font-size: 13px;
 }
 </style>
 </head>
@@ -153,65 +140,74 @@ body {
 <div class="bg"></div>
 <div class="overlay"></div>
 
-<div class="app fade">
+<div class="app">
 
   <!-- SIDEBAR -->
   <div class="sidebar">
     <div class="logo">❄️ SnowCade</div>
 
-    <div class="navbtn">🏠 Home</div>
-    <div class="navbtn">🎮 Games</div>
-    <div class="navbtn">🕒 Recently Played</div>
-    <div class="navbtn">👥 Friends</div>
-    <div class="navbtn">💬 Chat</div>
-    <div class="navbtn">⚙️ Settings</div>
+    <div class="nav active" onclick="switchPage('home')">🏠 Home</div>
+    <div class="nav" onclick="switchPage('games')">🎮 Games</div>
+    <div class="nav" onclick="switchPage('friends')">👥 Friends</div>
+    <div class="nav" onclick="switchPage('chat')">💬 Chat</div>
+    <div class="nav" onclick="switchPage('settings')">⚙️ Settings</div>
   </div>
 
   <!-- MAIN -->
   <div class="main">
 
     <div class="topbar">
-      <div class="title">Dashboard</div>
-      <div class="small">Welcome back, Player</div>
+      <div class="title" id="title">Home</div>
     </div>
 
-    <div class="grid">
-
-      <div class="card">
-        🎮 Snake
-        <div class="small">Classic arcade game</div>
+    <!-- HOME -->
+    <div class="page active" id="home">
+      <div class="grid">
+        <div class="card">🎮 Continue Playing</div>
+        <div class="card">🔥 Featured Game</div>
+        <div class="card">📊 Stats</div>
       </div>
+    </div>
 
-      <div class="card">
-        🔥 Featured Game
-        <div class="small">Coming soon</div>
+    <!-- GAMES -->
+    <div class="page" id="games">
+      <div class="grid">
+        <div class="card">🐍 Snake</div>
+        <div class="card">🧊 Clicker</div>
+        <div class="card">🎯 Shooter</div>
       </div>
+    </div>
 
-      <div class="card">
-        🕹 Clicker
-        <div class="small">Idle game</div>
-      </div>
+    <!-- FRIENDS -->
+    <div class="page" id="friends">
+      <div class="card">👥 Friends system coming soon</div>
+    </div>
 
-      <div class="card">
-        📊 Stats
-        <div class="small">Your activity</div>
-      </div>
+    <!-- CHAT -->
+    <div class="page" id="chat">
+      <div class="card">💬 Chat system coming soon</div>
+    </div>
 
-      <div class="card">
-        👥 Friends
-        <div class="small">Offline (coming soon)</div>
-      </div>
-
-      <div class="card">
-        💬 Chat
-        <div class="small">Not connected yet</div>
-      </div>
-
+    <!-- SETTINGS -->
+    <div class="page" id="settings">
+      <div class="card">⚙️ Settings coming soon</div>
     </div>
 
   </div>
-
 </div>
+
+<script>
+function switchPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+
+  document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
+  event.target.classList.add('active');
+
+  document.getElementById('title').innerText =
+    page.charAt(0).toUpperCase() + page.slice(1);
+}
+</script>
 
 </body>
 </html>
