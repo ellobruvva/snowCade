@@ -1,8 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>SnowCade</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SnowCade Dashboard</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #050505;
+  color: white;
+  overflow: hidden;
+}
+
+/* 🌌 background */
+.bg {
+  position: fixed;
+  inset: 0;
+  background: url("snow.gif") center/cover no-repeat;
+  filter: brightness(0.6) saturate(1.2);
+  z-index: -3;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(0,200,255,0.2), transparent 40%),
+              radial-gradient(circle at bottom right, rgba(255,0,200,0.15), transparent 45%),
+              rgba(0,0,0,0.6);
+  z-index: -2;
+}
+
+/* 🧊 layout */
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* 📌 sidebar */
+.sidebar {
+  width: 240px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.navbtn {
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  transition: 0.2s;
+}
+
+.navbtn:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* 🧠 main area */
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow: hidden;
+}
+
+/* header */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* 🎮 grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+/* 🎴 cards */
+.card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 20px;
+  transition: 0.25s ease;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,200,255,0.15);
+}
+
+/* glow hover */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(0,200,255,0.15), transparent 60%);
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* subtle animation */
+.fade {
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.small {
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+}
+</style>
 </head>
 
 <body>
@@ -10,14 +153,64 @@
 <div class="bg"></div>
 <div class="overlay"></div>
 
-<div class="container">
-  <h1>❄️ SnowCade</h1>
-  <p>A frozen arcade of games, friends, and fun.</p>
+<div class="app fade">
 
-  <div class="card">
-    <a class="btn primary" href="games.html">Enter Arcade</a>
-    <button class="btn secondary">Login (coming soon)</button>
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">❄️ SnowCade</div>
+
+    <div class="navbtn">🏠 Home</div>
+    <div class="navbtn">🎮 Games</div>
+    <div class="navbtn">🕒 Recently Played</div>
+    <div class="navbtn">👥 Friends</div>
+    <div class="navbtn">💬 Chat</div>
+    <div class="navbtn">⚙️ Settings</div>
   </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="topbar">
+      <div class="title">Dashboard</div>
+      <div class="small">Welcome back, Player</div>
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        🎮 Snake
+        <div class="small">Classic arcade game</div>
+      </div>
+
+      <div class="card">
+        🔥 Featured Game
+        <div class="small">Coming soon</div>
+      </div>
+
+      <div class="card">
+        🕹 Clicker
+        <div class="small">Idle game</div>
+      </div>
+
+      <div class="card">
+        📊 Stats
+        <div class="small">Your activity</div>
+      </div>
+
+      <div class="card">
+        👥 Friends
+        <div class="small">Offline (coming soon)</div>
+      </div>
+
+      <div class="card">
+        💬 Chat
+        <div class="small">Not connected yet</div>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
 </body>
